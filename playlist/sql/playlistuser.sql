@@ -1,0 +1,55 @@
+DROP DATABASE if EXISTS enjoydb;
+
+CREATE DATABASE enjoydb;
+
+USE enjoydb;
+
+-- SHOW DATABASES;
+SHOW DATABASES;
+
+-- Use the database
+USE enjoydb;
+
+
+CREATE TABLE User(
+    UserID INT AUTO_INCREMENT NOT NULL,
+    FirstName VARCHAR(50),
+    LastName VARCHAR(50),
+    Email VARCHAR(255),
+    PRIMARY KEY (UserID)
+);
+
+
+CREATE TABLE Playlist(
+    PlaylistID INT AUTO_INCREMENT NOT NULL,
+    PlaylistName VARCHAR(255) NOT NULL,
+    UserID INT NOT NULL,
+    PRIMARY KEY (PlaylistID),
+    FOREIGN KEY (UserID)
+        REFERENCES User(UserID) ON DELETE CASCADE
+);
+
+
+CREATE TABLE Artist(
+    ArtistID INT AUTO_INCREMENT NOT NULL,
+    ArtistName VARCHAR(255) NOT NULL,
+    UserID INT NOT NULL,
+    PRIMARY KEY (ArtistID),
+    FOREIGN KEY (UserID)
+        REFERENCES User(UserID) ON DELETE CASCADE
+);
+
+
+-- Create the Song Table
+CREATE TABLE Songs (
+    SongID INT AUTO_INCREMENT NOT NULL,
+    PlaylistID INT NOT NULL,
+    SongName VARCHAR(255) NOT NULL,
+    Artist VARCHAR(255) NOT NULL,
+    Genre VARCHAR(15) NOT NULL,
+    Year INT(4) NOT NULL,
+    Duration VARCHAR(5) NOT NULL,
+    PRIMARY KEY(SongID),
+    FOREIGN KEY(PlaylistID)
+        REFERENCES Playlist(PlaylistID) ON DELETE CASCADE
+);
